@@ -1,0 +1,6 @@
+@justmami.Server_HostAddress = http://localhost:5150
+
+GET {{justmami.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
