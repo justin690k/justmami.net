@@ -1,6 +1,7 @@
 using justmami.Application.Users.Commands.AddUser;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Silk.DDD.Results;
 
 namespace justmami.Server.Controllers;
 [ApiController]
@@ -19,7 +20,7 @@ public class UserController : ControllerBase
     [HttpPut(Name = "AddUser")]
     public async Task<IActionResult> Add([FromBody] AddUserCommand command)
     {
-        Application.Core.Result<bool> result = await _mediator.Send(command);
+        Result<bool> result = await _mediator.Send(command);
         return result.IsSuccess ? Ok(result) : BadRequest(result.Error);
     }
 }
