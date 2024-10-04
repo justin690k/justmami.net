@@ -15,6 +15,9 @@ jobs:
     # Check out the code from the repository
     - name: Checkout code
       uses: actions/checkout@v3
+      with:
+        # Fetch the full history instead of a shallow clone
+        fetch-depth: 0 
 
     # Install .NET SDK
     - name: Setup .NET SDK
