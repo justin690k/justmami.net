@@ -1,0 +1,41 @@
+name: Build and Test Project
+
+on:
+  # Trigger the pipeline on push or pull request to the main branch
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    # Check out the code from the repository
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Install .NET SDK
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.0.x'
+
+    # Restore dependencies
+    - name: Restore dependencies
+      run: dotnet restore
+
+    # Build the project
+    - name: Build the project
+      run: dotnet build --configuration Release --no-restore
+
+    # Run tests
+    - name: Run unit tests
+      run: dotnet test --no-restore --verbosity normal
+
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+          name: build-artifacts
+          path: out/Stable/build
