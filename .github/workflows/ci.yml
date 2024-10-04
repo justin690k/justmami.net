@@ -30,18 +30,29 @@ jobs:
       run: dotnet restore
 
     # Build the project
-    - name: Build the project
+    - name: Build the solution
       run: dotnet build --configuration Release --no-restore
 
     # Run tests
     - name: Run unit tests
       run: dotnet test --no-restore --verbosity normal
+    
+    - name: Publish Blazor WebAssembly Client
+      run: dotnet publish justmami.Client/justmami.Client.csproj --configuration Release --output ./out/client
 
-    - name: Publish the project
-      run: dotnet publish --configuration Release --output ./out
+    - name: Publish ASP.NET API
+      run: dotnet publish justmami.Server/justmami.Server.csproj --configuration Release --output ./out/api
 
-    - name: Upload the build artifacts
+
+    - name: Upload Client Artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: build-artifact
-        path: ./out
+        name: client
+        path: ./out/client
+
+    - name: Upload API Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: api
+        path: ./out/api
+
