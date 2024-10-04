@@ -7,18 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Users\Commands\EditUser\**" />
+    <Compile Remove="Users\Queries\**" />
+    <EmbeddedResource Remove="Users\Commands\EditUser\**" />
+    <EmbeddedResource Remove="Users\Queries\**" />
+    <None Remove="Users\Commands\EditUser\**" />
+    <None Remove="Users\Queries\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FluentValidation" Version="11.10.0" />
     <PackageReference Include="MediatR" Version="12.4.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\justmami.Domain\justmami.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Users\Commands\EditUser\" />
-    <Folder Include="Users\Queries\GetUser\" />
-    <Folder Include="Users\Queries\GetAllUsers\" />
   </ItemGroup>
 
 </Project>

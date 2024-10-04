@@ -1,6 +1,4 @@
-﻿using justmami.Domain.Entities;
-using justmami.Infrastructure.Core;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
 namespace justmami.Infrastructure.Repositories;
 public class UserRepository : IRepository<User>
