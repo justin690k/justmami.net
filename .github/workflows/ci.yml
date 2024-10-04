@@ -37,8 +37,11 @@ jobs:
     - name: Run unit tests
       run: dotnet test --no-restore --verbosity normal
 
-    - name: Upload build artifacts
+    - name: Publish the project
+      run: dotnet publish --configuration Release --output ./out
+
+    - name: Upload the build artifacts
       uses: actions/upload-artifact@v3
       with:
-          name: build-artifacts
-          path: out/Stable/build
+        name: build-artifact
+        path: ./out
