@@ -38,10 +38,10 @@ jobs:
       run: dotnet test --no-restore --verbosity normal
     
     - name: Publish Blazor WebAssembly Client
-      run: dotnet publish justmami.Client/justmami.Client.csproj -c Release -o ./out/client --self-contained true -p:PublishTrimmed=true
+      run: dotnet publish justmami.Client/justmami.Client.csproj -c Release -o ./out/client --runtime win-x64 --self-contained true -p:PublishTrimmed=true
 
     - name: Publish ASP.NET API
-      run: dotnet publish justmami.Server/justmami.Server.csproj -c Release -o ./out/api --self-contained true -p:PublishSingleFile=true -p:PublishTrimmed=true
+      run: dotnet publish justmami.Server/justmami.Server.csproj -c Release -o ./out/api --runtime win-x64 --self-contained true -p:PublishSingleFile=true
 
 
     - name: Upload Client Artifacts
