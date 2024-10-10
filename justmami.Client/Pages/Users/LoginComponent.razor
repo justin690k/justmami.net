@@ -1,0 +1,37 @@
+﻿@page "/Login"
+
+<MudPage FullScreen="FullScreen.FullWithoutAppbar" Row="10" Column="3">
+    <MudSection Row="2" RowSpan="8" Column="2" >
+        <MudGrid Justify="Justify.Center" Spacing="2">
+            <MudItem xs="12" sm="12">
+                <MudPaper Elevation="4" Class="pa-6">
+                    <MudText Typo="Typo.h4" Class="text-center mb-4" Color="Color.Secondary">Sign in</MudText>
+
+                    <MudButton Disabled="true" StartIcon="@Icons.Custom.Brands.Google" Variant="Variant.Outlined" Color="Color.Secondary" FullWidth="true" Class="mb-2">
+                        Continue with Google
+                    </MudButton>
+                    <MudButton Disabled="true" StartIcon="@Icons.Custom.Brands.Facebook" Variant="Variant.Outlined" Color="Color.Secondary" FullWidth="true" Class="mb-2">
+                        Continue with Facebook
+                    </MudButton>
+
+                    <MudDivider Class="my-4">or</MudDivider>
+
+                    <MudTextField Label="Username" Variant="Variant.Outlined" Class="mb-2" @bind-Value="username" />
+                    <MudPasswordField Label="Password" Variant="Variant.Outlined" InputType="InputType.Password" Format="" Class="mb-4" @bind-Value="password" />
+
+                    <MudButton Variant="Variant.Filled" Color="Color.Secondary" FullWidth="true">Sign in</MudButton>
+
+                    <div class="text-center mt-4">
+                        <MudText>Don't have an account? <MudLink Href="/register">Create Account</MudLink></MudText>
+                        <MudText><MudLink Href="/forgot-password">Forgot Password?</MudLink></MudText>
+                    </div>
+                </MudPaper>
+            </MudItem>
+        </MudGrid>
+    </MudSection>
+</MudPage>
+
+@code {
+    private string username;
+    private string password;
+}
