@@ -7,12 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Users\Commands\EditUser\**" />
-    <Compile Remove="Users\Queries\**" />
-    <EmbeddedResource Remove="Users\Commands\EditUser\**" />
-    <EmbeddedResource Remove="Users\Queries\**" />
-    <None Remove="Users\Commands\EditUser\**" />
-    <None Remove="Users\Queries\**" />
+    <Compile Remove="Commands\EditUser\**" />
+    <Compile Remove="Commands\Users\Queries\**" />
+    <EmbeddedResource Remove="Commands\EditUser\**" />
+    <EmbeddedResource Remove="Commands\Users\Queries\**" />
+    <None Remove="Commands\EditUser\**" />
+    <None Remove="Commands\Users\Queries\**" />
   </ItemGroup>
 
   <ItemGroup>

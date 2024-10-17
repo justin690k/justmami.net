@@ -1,4 +1,4 @@
-﻿namespace justmami.Application.Users.Commands.DeleteUser;
+﻿namespace justmami.Application.Commands.DeleteUser;
 public class DeleteUserHandler : CommandHandler<DeleteUserCommand, Result<bool>>
 {
     public override async Task<Result<bool>> Handle(DeleteUserCommand command, CancellationToken cancellationToken)
