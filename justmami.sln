@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionIt
 		version.json = version.json
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "justmami.Test.Architecture", "justmami.Test.Architecture\justmami.Test.Architecture.csproj", "{A56EEB25-F922-4D32-AACB-399135A5CC74}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{884EA624-4471-4A9E-9689-660D976F519B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{884EA624-4471-4A9E-9689-660D976F519B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{884EA624-4471-4A9E-9689-660D976F519B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A56EEB25-F922-4D32-AACB-399135A5CC74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A56EEB25-F922-4D32-AACB-399135A5CC74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A56EEB25-F922-4D32-AACB-399135A5CC74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A56EEB25-F922-4D32-AACB-399135A5CC74}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

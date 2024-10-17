@@ -1,4 +1,4 @@
-﻿namespace justmami.Application.Users.Commands.AddUser;
+﻿namespace justmami.Application.Commands.AddUser;
 public class AddUserValidator : CommandValidator<AddUserCommand>
 {
     public AddUserValidator()

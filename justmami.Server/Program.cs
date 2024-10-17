@@ -1,4 +1,4 @@
-using justmami.Application.Users.Commands.AddUser;
+using justmami.Application.Commands.AddUser;
 
 namespace justmami.Server;
 

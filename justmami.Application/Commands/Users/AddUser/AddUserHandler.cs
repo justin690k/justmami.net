@@ -1,7 +1,7 @@
-﻿namespace justmami.Application.Users.Commands.AddUser;
+﻿namespace justmami.Application.Commands.AddUser;
 public class AddUserHandler : CommandHandler<AddUserCommand, Result<bool>>
 {
-    public override async Task<Result<Boolean>> Handle(AddUserCommand command, CancellationToken cancellationToken)
+    public override async Task<Result<bool>> Handle(AddUserCommand command, CancellationToken cancellationToken)
     {
         //New Validation logic just copy
         FluentValidation.Results.ValidationResult validationResult = new AddUserValidator().Validate(command);
