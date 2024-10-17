@@ -18,6 +18,22 @@ public class User : Entity
 
 public static class Userextensions
 {
+    public static string GeneratePassword()
+    {
+        StringBuilder builder = new StringBuilder();
+        Random random = new Random();
+        char ch;
+
+        for(int i = 0; i < 16; i++)
+        {
+            //Convert a random Double value to a char
+            ch = Convert.ToChar(Convert.ToInt32(Math.Floor(26 * random.NextDouble() + 25)));
+            builder.Append(ch); 
+        }
+
+        return builder.ToString();
+    }
+
     public static string HashPassword(this User user) => GetHashString(user.Password);
 
     private static byte[] GetHash(string inputString)

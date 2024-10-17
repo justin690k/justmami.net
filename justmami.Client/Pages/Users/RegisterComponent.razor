@@ -1,17 +1,66 @@
 ﻿@page "/Register"
+@using System.ComponentModel.DataAnnotations
 
-<style>
-	.TextColorStyle {
-		color: #f8f7f9;
-		font-style: revert-layer
-	}
-</style>
+<MudPage FullScreen="FullScreen.FullWithoutAppbar" Row="10" Column="3">
+	<MudSection Row="2" RowSpan="8" Column="2">
+		<MudGrid Justify="Justify.Center" Spacing="2">
+			<MudItem xs="12" sm="12">
+				<MudPaper Elevation="4" Class="pa-6">
+					<EditForm method="post" Model="Model" FormName="RegisterModal" OnValidSubmit="Register">
+						<DataAnnotationsValidator/>
 
-<MudPage FullScreen="FullScreen.FullWithoutAppbar" Column="2" Row="2">
-	<MudSection ColSpan="2" RowSpan="2">
-		<MudText Class="TextColorStyle" Align="Align.Center" Typo="Typo.h3">Register</MudText>
-	</MudSection>
+						<MudText Typo="Typo.h4" Class="text-center mb-4" Color="Color.Secondary">Register</MudText>
+
+						<MudButton Disabled="true" StartIcon="@Icons.Custom.Brands.Google" Variant="Variant.Outlined" Color="Color.Secondary" FullWidth="true" Class="mb-2">
+							Continue with Google
+						</MudButton>
+
+						<MudDivider Class="my-4">or</MudDivider>
+
+						<MudTextField Label="Firstname" RequiredError="Firstname is required!" Class="mb-2" @bind-Value="Model.Firstname" For="@(() => Model.Firstname)" />
+						<MudTextField Label="Lastname" RequiredError="Lastname is required!" Class="mb-2" @bind-Value="Model.Lastname" For="@(() => Model.Lastname)" />
+						<MudTextField Label="Email" RequiredError="Email is required!" InputType="InputType.Email" Class="mb-2" @bind-Value="Model.Email" For="@(() => Model.Email)" />
+						<MudPasswordField Label="Password" RequiredError="Password is required!" InputType="InputType.Password" Format="" Class="mb-4" @bind-Value="Model.Password" For="@(() => Model.Password)" />
+						<MudPasswordField Label="Confirm Password" RequiredError="Confirm password is required!" InputType="InputType.Password" Format="" Class="mb-4" @bind-Value="Model.ConfirmPassword" For="@(() => Model.ConfirmPassword)" />
+
+						<MudButton Variant="Variant.Filled" Color="Color.Secondary" ButtonType="ButtonType.Submit" FullWidth="true">Sign up</MudButton>
+
+						<div class="text-center mt-4">
+							<MudText>Already have an account? <MudLink Href="/Login">Sign in</MudLink></MudText>
+						</div>
+					</EditForm>
+				</MudPaper>
+			</MudItem>
+		</MudGrid>
+	</MudSection> 
 </MudPage>
+
 @code {
 
+	private RegisterModel Model { get; set; } = new();
+
+
+	private void Register()
+	{
+		
+	}
+
+
+	private class RegisterModel
+	{
+		[Required, MaxLength(255)]
+		public string Firstname { get; set; }
+
+		[Required, MaxLength(255)]
+		public string Lastname { get; set; }
+
+		[Required, EmailAddress]
+		public string Email { get; set; }
+
+		[Required, MinLength(8), MaxLength(255)]
+		public string Password { get; set; }
+
+		[Required, MinLength(8), MaxLength(255)]
+		public string ConfirmPassword { get; set; }
+	}
 }
