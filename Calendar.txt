@@ -1,0 +1,167 @@
+@page "/calendar"
+@rendermode InteractiveServer
+
+<MudGrid>
+    <!-- Button Group for Switching Views -->
+    <MudItem xs="12">
+        <MudButtonGroup Exclusive Color="Color.Primary">
+            <MudButton Variant="Variant.Filled" OnClick="@(() => ChangeView(CalendarView.Day))">Day</MudButton>
+            <MudButton Variant="Variant.Filled" OnClick="@(() => ChangeView(CalendarView.Week))">Week</MudButton>
+            <MudButton Variant="Variant.Filled" OnClick="@(() => ChangeView(CalendarView.Month))">Month</MudButton>
+        </MudButtonGroup>
+    </MudItem>
+
+    <!-- Date Display -->
+    <MudItem xs="12" class="text-center">
+        <MudText Typo="Typo.h3" Color="Color.Secondary">@currentDate.ToString("MMMM yyyy")</MudText>
+    </MudItem>
+
+    <!-- Day View -->
+    @if (currentView == CalendarView.Day)
+    {
+        <MudItem xs="12">
+            <MudText Typo="Typo.h4" Color="Color.Primary" class="mb-4">Day View: @currentDate.ToString("dddd, MMMM dd")</MudText>
+            <MudGrid>
+                @foreach (var hour in dayTimeline)
+                {
+                    <MudItem xs="12" sm="12">
+                        <MudCard Elevation="0">
+                            <MudCardContent>
+                                <MudText Typo="Typo.subtitle1">@hour.Hour:00</MudText>
+                                @foreach (var meeting in meetings)
+                                {
+                                    @if (meeting.Time.Hour == hour.Hour && meeting.Time.Date == currentDate.Date)
+                                    {
+                                        <MudChip Label="true" T="Meeting" Color="Color.Info" Value="meeting" OnClose="CloseMeeting" CloseIcon="@Icons.Material.Filled.Close">@meeting.Title (From @meeting.Time.ToString("HH:mm") for @meeting.Duration Minutes)</MudChip>
+                                    }
+                                }
+                            </MudCardContent>
+                        </MudCard>
+                        <MudDivider DividerType="DividerType.FullWidth" />
+                    </MudItem>
+                }
+            </MudGrid>
+        </MudItem>
+    }
+
+    <!-- Week View -->
+    @if (currentView == CalendarView.Week)
+    {
+        <MudGrid>
+            <MudItem xs="20" sm="20">
+                <MudGrid>
+                    <!-- Single Time Line on the Left -->
+                    <MudItem xs="1" sm="1">
+                        <MudCard Elevation="0">
+                            <MudCardContent>
+                                @foreach (var hour in dayTimeline)
+                                {
+                                    <MudText Typo="Typo.subtitle1">@hour.Hour:00</MudText>
+                                }
+                            </MudCardContent>
+                        </MudCard>
+                    </MudItem>
+
+                    <!-- Days of the Week (Monday-Sunday) -->
+                    @foreach (var day in weekTimeline)
+                    {
+                        <MudItem xs="1" sm="1">
+                            <MudCard>
+                                <MudCardHeader>
+                                    <MudText Typo="Typo.subtitle1" Color="Color.Secondary">@day.ToString("dddd, MMM dd")</MudText>
+                                </MudCardHeader>
+                                <MudCardContent>
+                                    @foreach (var hour in dayTimeline)
+                                    {
+                                        <MudGrid>
+                                            <MudItem xs="2" sm="2">
+                                                @foreach (var meeting in meetings)
+                                                {
+                                                    @if (meeting.Time.Hour == hour.Hour && meeting.Time.Date == day.Date)
+                                                    {
+                                                        <MudChip Label="true" T="Meeting" Color="Color.Info" Value="meeting" OnClose="CloseMeeting" CloseIcon="@Icons.Material.Filled.Close">
+                                                            @meeting.Title (From @meeting.Time.ToString("HH:mm") for @meeting.Duration Minutes)
+                                                        </MudChip>
+                                                    }
+                                                }
+                                            </MudItem>
+                                        </MudGrid>
+                                    }
+                                </MudCardContent>
+                            </MudCard>
+                        </MudItem>
+                    }
+                </MudGrid>
+            </MudItem>
+        </MudGrid>
+    }
+
+
+    <!-- Month View -->
+    @if (currentView == CalendarView.Month)
+    {
+        <MudTable T="Meeting" Striped Hover="true">
+            <HeaderContent>
+                <MudTh>Sun</MudTh>
+                <MudTh>Mon</MudTh>
+                <MudTh>Tue</MudTh>
+                <MudTh>Wed</MudTh>
+                <MudTh>Thu</MudTh>
+                <MudTh>Fri</MudTh>
+                <MudTh>Sat</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                @foreach (var week in monthTimeline)
+                {
+                    <MudTr>
+                        @foreach (var day in week)
+                        {
+                            <MudTd>
+                                <MudCard>
+                                    <MudCardContent>
+                                        <MudText Typo="Typo.body1">@day.Day</MudText>
+                                        @foreach (var meeting in meetings)
+                                        {
+                                            @if (meeting.Time.Date == day.Date)
+                                            {
+                                                <MudChip T="Meeting" Color="Color.Info">@meeting.Title</MudChip>
+                                            }
+                                        }
+                                    </MudCardContent>
+                                </MudCard>
+                            </MudTd>
+                        }
+                    </MudTr>
+                }
+            </RowTemplate>
+        </MudTable>
+    }
+
+    <!-- Meeting Scheduler -->
+    <MudItem xs="12">
+        <MudCard class="mt-4">
+            <MudCardHeader>
+                <MudText Typo="Typo.h5" Color="Color.Primary">Schedule a Meeting</MudText>
+            </MudCardHeader>
+            <MudCardContent>
+                <MudGrid>
+                    <MudItem xs="12" sm="6">
+                        <MudTextField Immediate="true" Label="Meeting Title" @bind-Value="meetingTitle" Variant="Variant.Outlined"></MudTextField>
+                    </MudItem>
+                    <MudItem xs="12" sm="3">
+                        <MudDatePicker ImmediateText="true"  Label="Select Date"  @bind-Date="meetingDate" Variant="Variant.Outlined"></MudDatePicker>
+                    </MudItem>
+                    <MudItem xs="12" sm="3">
+                        <MudTimePicker ImmediateText="true" Label="Select Time" @bind-Time="meetingTime" Variant="Variant.Outlined"></MudTimePicker>
+                    </MudItem>
+                    <MudItem xs="12" sm="3">
+                        <MudTextField Immediate="true" Label="Duration (minutes)" @bind-Value="meetingDuration" Type="number" Variant="Variant.Outlined"></MudTextField>
+                    </MudItem>
+                    <MudItem xs="12">
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="AddMeeting" class="mt-3">Add Meeting</MudButton>
+                    </MudItem>
+                </MudGrid>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+</MudGrid>
