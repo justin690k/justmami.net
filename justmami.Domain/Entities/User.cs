@@ -11,7 +11,8 @@ public class User : Entity
     public bool IsEmailConfirmed { get; set; } = false;
     public int? Phone_number { get; set; }
     public bool IsPhoneConfirmed { get; set; } = false;
-    public required DateTime Birthdate { get; set; }
+    public string RefreshToken { get; set; } = string.Empty;
+    public DateTime RefreshTokenExpiryTime { get; set; }
 
     //TODO Add CalanderId for a connection
 }

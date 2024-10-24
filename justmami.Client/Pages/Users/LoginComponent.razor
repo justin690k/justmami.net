@@ -1,56 +1,61 @@
 ﻿@page "/Login"
-@using System.ComponentModel.DataAnnotations
+@using justmami.Client.Services.User
+@using justmami.Domain.Requests
+@inject AuthService AuthService
 
 <MudPage FullScreen="FullScreen.FullWithoutAppbar" Row="10" Column="3">
-    <MudSection Row="2" RowSpan="8" Column="2" >
-        <MudGrid Justify="Justify.Center" Spacing="2">
-            <MudItem xs="12" sm="12">
-                <MudPaper Elevation="4" Class="pa-6">
-                    <EditForm method="post" Model="Model" FormName="LoginForm" OnValidSubmit="Login">
-                        <DataAnnotationsValidator />
+	<MudSection Row="2" RowSpan="8" Column="2">
+		<MudGrid Justify="Justify.Center" Spacing="2">
+			<MudItem xs="12" sm="12">
+				<MudPaper Elevation="4" Class="pa-6">
+					<EditForm method="post" Model="Request" FormName="LoginForm" OnValidSubmit="Login">
+						<DataAnnotationsValidator />
 
-                        <MudText Typo="Typo.h4" Class="text-center mb-4" Color="Color.Secondary">Sign in</MudText>
+						<MudText Typo="Typo.h4" Class="text-center mb-4" Color="Color.Secondary">Sign in</MudText>
 
-                        <MudButton Disabled="true" StartIcon="@Icons.Custom.Brands.Google" Variant="Variant.Outlined" Color="Color.Secondary" FullWidth="true" Class="mb-2">
-                            Continue with Google
-                        </MudButton>
-                        <MudButton Disabled="false" StartIcon="@Icons.Custom.Brands.Reddit" Variant="Variant.Outlined" Color="Color.Secondary" FullWidth="true" Class="mb-2">
-                            Continue as Child
-                        </MudButton>
+						<MudButton Disabled="true" StartIcon="@Icons.Custom.Brands.Google" Variant="Variant.Outlined" Color="Color.Secondary" FullWidth="true" Class="mb-2">
+							Continue with Google
+						</MudButton>
+						<MudButton Disabled="false" StartIcon="@Icons.Custom.Brands.Reddit" Variant="Variant.Outlined" Color="Color.Secondary" FullWidth="true" Class="mb-2">
+							Continue as Child
+						</MudButton>
 
-                        <MudDivider Class="my-4">or</MudDivider>
-                        <MudTextField T="string" Label="Email" Required="true" RequiredError="Email is required!" @bind-Value="Model.Email" For="@(() => Model.Email)" />
-                        <MudPasswordField T="string" Label="Password" Required="true" RequiredError="Password is required!" InputType="InputType.Password" Class="mb-4" @bind-Value="Model.Password" For="(() => Model.Password)" />
+						<MudDivider Class="my-4">or</MudDivider>
+						<MudTextField T="string" Label="Email" Required="true" RequiredError="Email is required!" @bind-Value="Request.Email" For="@(() => Request.Email)" />
+						<MudPasswordField T="string" Label="Password" Required="true" RequiredError="Password is required!" InputType="InputType.Password" Class="mb-4" @bind-Value="Request.Password" For="(() => Request.Password)" />
 
-                        <MudButton Variant="Variant.Filled" Style="margin-top: 5%" Color="Color.Secondary" FullWidth="true" ButtonType="ButtonType.Submit">Sign in</MudButton>
+						<MudButton Variant="Variant.Filled" Style="margin-top: 5%" Color="Color.Secondary" FullWidth="true" ButtonType="ButtonType.Submit">Sign in</MudButton>
 
-                        <div class="text-center mt-4">
-                            <MudText>Don't have an account? <MudLink Href="/Register">Create Account</MudLink></MudText>
-                            <MudText><MudLink Href="/forgot-password">Forgot Password?</MudLink></MudText>
-                        </div>
-                     </EditForm>
-                </MudPaper>
-            </MudItem>
-        </MudGrid>
-    </MudSection>
+						<div class="text-center mt-4">
+							<MudText>Don't have an account? <MudLink Href="/Register">Create Account</MudLink></MudText>
+							<MudText><MudLink Href="/forgot-password">Forgot Password?</MudLink></MudText>
+						</div>
+					</EditForm>
+				</MudPaper>
+			</MudItem>
+		</MudGrid>
+	</MudSection>
 </MudPage>
 
 @code {
-    [SupplyParameterFromForm]
-    private LoginModel Model { get; set; } = new();
+	private LoginRequest Request = new LoginRequest
+		{
+			Email = string.Empty,
+			Password = string.Empty
+		};
 
 
-    private void Login()
-    {
 
-    }
+	private async void Login()
+	{
+		var tokenResponse = await AuthService.LoginAsync(Request);
 
-    private class LoginModel
-    {
-        [Required, EmailAddress]
-        public string Email { get; set; }
-
-        [Required, MaxLength(255)]
-        public string Password { get; set; }
-    }
+		if (!tokenResponse.Success)
+		{
+			// TODO Display error on UI
+			throw new Exception($"Token response error message: {tokenResponse.ErrorMessage}");
+		}
+		
+		
+	}
 }
