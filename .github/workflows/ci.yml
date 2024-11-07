@@ -62,13 +62,13 @@ jobs:
     
     steps:
       - name: Download Client Artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: client
           path: ./out/client
 
       - name: Download API Artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: api
           path: ./out/api
