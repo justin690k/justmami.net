@@ -76,6 +76,9 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
+      - name: List root directory files
+        run: ls -la
+
       - name: Build Docker images locally
         run: |
           docker build -t justmami-client:latest -f ./Dockerfile.client ./out/client
