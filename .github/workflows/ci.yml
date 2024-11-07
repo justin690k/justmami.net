@@ -85,8 +85,8 @@ jobs:
 
       - name: Build Docker images locally
         run: |
-          docker build -t justmami-client:latest -f Dockerfile.client ./out/client
-          docker build -t justmami-api:latest -f Dockerfile.api ./out/api
+          docker build -t justmami-client:latest -f ./out/client/Dockerfile.client ./out/client
+          docker build -t justmami-api:latest -f ./out/apiDockerfile.api ./out/api
 
       - name: Deploy with Docker Compose
         run: |
