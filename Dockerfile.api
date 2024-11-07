@@ -1,0 +1,31 @@
+# Dockerfile.api
+
+# First stage: Build the .NET application
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+
+# Set the working directory
+WORKDIR /app
+
+# Copy everything from the current directory to the container
+COPY . .
+
+# Restore dependencies
+RUN dotnet restore
+
+# Publish the application
+RUN dotnet publish -c Release -o /app/out --self-contained true --runtime linux-x64
+
+# Second stage: Run the application in a smaller runtime image
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
+
+# Copy the published files from the build stage
+COPY --from=build /app/out /app
+
+# Set the working directory
+WORKDIR /app
+
+# Expose port 80
+EXPOSE 80
+
+# Run the application
+ENTRYPOINT ["dotnet", "justmami.Server.dll"]
