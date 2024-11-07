@@ -34,7 +34,7 @@ jobs:
       run: dotnet build --configuration Release --no-restore
 
     # Run tests
-    - name: Run unit tests
+    - name: Run unit umitTests
       run: dotnet test --no-restore --verbosity normal
     
     - name: Publish Blazor WebAssembly Client
