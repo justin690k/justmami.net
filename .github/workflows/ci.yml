@@ -56,3 +56,34 @@ jobs:
         name: api
         path: ./out/api
 
+  dockerize:
+    needs: build
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Download Client Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: client
+          path: ./out/client
+
+      - name: Download API Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: api
+          path: ./out/api
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: List root directory files
+        run: ls -la
+
+      - name: Build Docker images locally
+        run: |
+          docker build -t justmami-client:latest -f ./Dockerfile.client ./out/client
+          docker build -t justmami-api:latest -f ./Dockerfile.api ./out/api
+
+      - name: Deploy with Docker Compose
+        run: |
+          docker-compose up -d

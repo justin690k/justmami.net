@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  client:
+    build:
+      context: ./out/client
+      dockerfile: ./Dockerfile.client
+    ports:
+      - "8080:80"
+
+  api:
+    build:
+      context: ./out/api
+      dockerfile: ./Dockerfile.api
+    ports:
+      - "5000:80"
