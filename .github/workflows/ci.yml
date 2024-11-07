@@ -43,6 +43,10 @@ jobs:
     - name: Publish ASP.NET API
       run: dotnet publish justmami.Server/justmami.Server.csproj -c Release -o ./out/api --runtime win-x64 --self-contained true -p:PublishSingleFile=true
 
+    - name: Copy Dockerfiles to artifacts
+      run: |
+          cp Dockerfile.client ./out/client/Dockerfile.client
+          cp Dockerfile.api ./out/api/Dockerfile.api
 
     - name: Upload Client Artifacts
       uses: actions/upload-artifact@v4
@@ -81,8 +85,8 @@ jobs:
 
       - name: Build Docker images locally
         run: |
-          docker build -t justmami-client:latest -f ./Dockerfile.client ./out/client
-          docker build -t justmami-api:latest -f ./Dockerfile.api ./out/api
+          docker build -t justmami-client:latest -f Dockerfile.client ./out/client
+          docker build -t justmami-api:latest -f Dockerfile.api ./out/api
 
       - name: Deploy with Docker Compose
         run: |
